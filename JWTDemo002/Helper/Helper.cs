@@ -1,4 +1,5 @@
-﻿using JWTDemo002.Model;
+﻿using JWTDemo002.Enums;
+using JWTDemo002.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,7 +16,7 @@ namespace JWTDemo002.Helper
                 List<Claim> claims = new List<Claim>
             {
                 new(ClaimTypes.Name, user.Username),
-                new (ClaimTypes.Role, "user")
+                new (ClaimTypes.Role, Role.user.ToString())
             };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey));
@@ -24,7 +25,7 @@ namespace JWTDemo002.Helper
 
                 var token = new JwtSecurityToken(
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(3),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: cred
                     );
                 var jwt = new JwtSecurityTokenHandler().WriteToken(token);

@@ -1,5 +1,6 @@
 ﻿using JWTDemo002.Model;
 using JWTDemo002.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -28,6 +29,7 @@ namespace JWTDemo002.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
@@ -43,6 +45,7 @@ namespace JWTDemo002.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("user")]
         public async Task<IActionResult> GetUser(Guid id)
         {
