@@ -20,11 +20,11 @@ builder.Services.AddSwaggerGen( opt =>
     opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
-        Name = "JWT Authorization",
+        Name = "Authorization",
         Type = SecuritySchemeType.Http,
         BearerFormat = "JWT",
-        Scheme = "bearer"
+        //Scheme = "bearer",
+        Description = "Enter only the bearer token"
     });
     opt.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -33,8 +33,8 @@ builder.Services.AddSwaggerGen( opt =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
                 }
             },
             new string[]{}
@@ -42,7 +42,7 @@ builder.Services.AddSwaggerGen( opt =>
     });
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+builder.Services.AddAuthentication().AddJwtBearer(opt =>
 {
     opt.TokenValidationParameters = new TokenValidationParameters
     {
